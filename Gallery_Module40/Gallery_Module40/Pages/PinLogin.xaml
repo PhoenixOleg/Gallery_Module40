@@ -6,8 +6,8 @@
     <ContentPage.Content>
         <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
             <Label Text="Entry PIN code:" />
-            <Entry x:Name="pinEntry" IsPassword="True"/>
-            <Button x:Name="buttonSubmit" Text="Submit" Clicked="ButtonSubmit_Clicked"/>
+            <Entry x:Name="pinEntry" IsPassword="True" HorizontalTextAlignment="Center" />
+            <Button x:Name="buttonSubmit" Text="Submit" Clicked="ButtonSubmit_Clicked" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

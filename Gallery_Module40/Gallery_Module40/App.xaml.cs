@@ -11,8 +11,8 @@ namespace Gallery_Module40
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new PinLogin());
-            //MainPage = new PinLogin();
+            //MainPage = new NavigationPage(new PinLogin());
+            MainPage = new NavigationPage(new GalleryViewer());
         }
 
         protected override void OnStart()

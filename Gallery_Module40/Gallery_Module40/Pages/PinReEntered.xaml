@@ -5,7 +5,7 @@
     <ContentPage.Content>
         <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
             <Label Text="Confirm the PIN code" />
-            <Entry x:Name="pinEntry" IsPassword="True"/>
+            <Entry x:Name="pinEntry" IsPassword="True" HorizontalTextAlignment="Center"/>
             <Button x:Name="buttonSubmit" Text="Ok" Clicked="ButtonOk_Clicked"/>
             <Button x:Name="buttonCancel" Text="Cancel" Clicked="ButtonCancel_Clicked"/>
         </StackLayout>

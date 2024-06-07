@@ -1,34 +1,47 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Gallery_Module40.Pages"
              x:Class="Gallery_Module40.Pages.GalleryViewer"
              NavigationPage.HasNavigationBar="False">
-    
-  <ListView x:Name="MyListView"
-            ItemsSource="{Binding Items}"
-            ItemTapped="Handle_ItemTapped"
-            CachingStrategy="RecycleElement">
-    <!--Built in Cells-->
-    <ListView.ItemTemplate>
-        <DataTemplate>
-            <TextCell Text="{Binding .}" />
-        </DataTemplate>
-    </ListView.ItemTemplate>
-    
-    <!--Custom View Cells-->
-    <!--
-    <ListView.ItemTemplate>
-      <DataTemplate>
-        <ViewCell>
-          <StackLayout>
-            <Label Text="{Binding Text}" 
-                   Style="{DynamicResource ListItemTextStyle}" />
-            <Label Text="{Binding Detail}" 
-                   Style="{DynamicResource ListItemDetailTextStyle}"/>
-          </StackLayout>
-        </ViewCell>
-      </DataTemplate>
-    </ListView.ItemTemplate>
-    -->
-  </ListView>
+
+    <StackLayout HorizontalOptions="Center">
+        <Label x:Name="MyLabel" Text="Your's galleries" HorizontalOptions="Center" TextColor="Black" BackgroundColor="AliceBlue"/>
+
+        <ListView x:Name="PictureList"
+            BackgroundColor="AliceBlue"            
+            ItemsSource="{Binding Pictures}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ImageCell
+                        ImageSource="{Binding ImagePath}"    
+                        Text="{Binding ImageFileName}"
+                        Detail="{Binding ImageSource}"
+                        TextColor="Black"
+                        DetailColor="Blue"
+                    />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" >
+            <Button x:Name="buttonOpen" Text="Open" Clicked="ButtonOpen_Clicked" CornerRadius="20" Margin="10"/>
+            <Button x:Name="buttonDelete" Text="Delete" Clicked="ButtonDelete_Clicked" CornerRadius="20" Margin="10"/>
+        </StackLayout>
+        
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" >
+            <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                <CheckBox x:Name="chkDism" IsChecked="True" VerticalOptions="Center" CheckedChanged="CheckBoxes_CheckedChanged" />
+                <Label Text="Fotos" VerticalOptions="Center" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                <CheckBox x:Name="chkPicture" IsChecked="True" VerticalOptions="Center" CheckedChanged="CheckBoxes_CheckedChanged" />
+                <Label Text="Pictures" VerticalOptions="Center" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                <CheckBox x:Name="chkScreenshots" IsChecked="False" VerticalOptions="Center" CheckedChanged="CheckBoxes_CheckedChanged" />
+                <Label Text="Screenshots" VerticalOptions="Center" />
+            </StackLayout>
+        </StackLayout>
+    </StackLayout>
 </ContentPage>
