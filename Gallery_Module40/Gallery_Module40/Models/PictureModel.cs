@@ -7,14 +7,14 @@ using System.Text;
 
 namespace Gallery_Module40.Models
 {
-    public class Picture : INotifyPropertyChanged
+    public class PictureModel : INotifyPropertyChanged
     {
         private string imagePath;
         private string imageFileName;
         private string imageDate;
-        private string imageSource;
+        private long id;
 
-        public Picture() { }
+        public PictureModel() { }
 
         public string ImagePath
         {
@@ -64,16 +64,16 @@ namespace Gallery_Module40.Models
             }
         }
 
-        public string ImageSource
+        public long Id
         { 
             get 
             { 
-                return imageSource; 
+                return id; 
             } 
             
             set 
             { 
-                imageSource = value;
+                id = value;
 
                 // Вызов уведомления при изменении
                 OnPropertyChanged();

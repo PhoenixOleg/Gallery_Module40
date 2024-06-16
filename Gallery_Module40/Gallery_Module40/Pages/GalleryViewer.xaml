@@ -29,7 +29,7 @@
             <Button x:Name="buttonDelete" Text="Delete" Clicked="ButtonDelete_Clicked" CornerRadius="20" Margin="10"/>
         </StackLayout>
         
-        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" >
+        <!--<StackLayout Orientation="Horizontal" HorizontalOptions="Center" >
             <StackLayout Orientation="Horizontal" VerticalOptions="Center">
                 <CheckBox x:Name="chkDism" IsChecked="True" VerticalOptions="Center" CheckedChanged="CheckBoxes_CheckedChanged" />
                 <Label Text="Fotos" VerticalOptions="Center" />
@@ -42,6 +42,9 @@
                 <CheckBox x:Name="chkScreenshots" IsChecked="False" VerticalOptions="Center" CheckedChanged="CheckBoxes_CheckedChanged" />
                 <Label Text="Screenshots" VerticalOptions="Center" />
             </StackLayout>
+        </StackLayout>-->
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" >
+            <Button x:Name="ButtonRefresh" Text="Refresh" Clicked="ButtonRefresh_Clicked" CornerRadius="20" Margin="10"/>
         </StackLayout>
     </StackLayout>
 </ContentPage>

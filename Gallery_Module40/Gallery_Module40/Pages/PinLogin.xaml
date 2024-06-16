@@ -5,9 +5,36 @@
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
         <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-            <Label Text="Entry PIN code:" />
-            <Entry x:Name="pinEntry" IsPassword="True" HorizontalTextAlignment="Center" />
-            <Button x:Name="buttonSubmit" Text="Submit" Clicked="ButtonSubmit_Clicked" />
+            <Label x:Name="LabelPrompt" 
+                   Text="Entry PIN code:" 
+                   HorizontalOptions="Center"
+            />
+
+            <Entry x:Name="PinEntry" 
+                   IsPassword="True" 
+                   TextColor="Black"
+                   ClearButtonVisibility="WhileEditing"
+                   TextChanged="Password_TextChanged"
+                   Completed="PinEntry_Completed"
+                   WidthRequest="150"
+                   MaxLength="8"
+                   HorizontalOptions="Center"  
+                   HorizontalTextAlignment="Center" 
+            />
+
+            <Label x:Name="InfoMsg" 
+                   Text="" 
+                   TextColor="Red" 
+                   HorizontalOptions="Center" 
+                   HorizontalTextAlignment="Center"
+            />
+
+            <Button x:Name="ButtonSubmit" 
+                    Text="Submit" 
+                    Clicked="ButtonSubmit_Clicked" 
+                    IsEnabled="False" 
+                    HorizontalOptions="Center" 
+            />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -16,25 +16,64 @@ namespace Gallery_Module40.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PinLogin : ContentPage
     {
+        private bool isRegistration = false; //признак, что пользователь зарегистрирован в приложении (пин код установлен)
+
         public PinLogin()
         {
             InitializeComponent();
         }
 
-        private async void ButtonSubmit_Clicked(object sender, EventArgs e)
+        /// <summary>
+        /// Устанавливаем текст запроса на ввод пин-кода (первичная регистрация или вход)
+        /// </summary>
+        protected override void OnAppearing()
         {
-            string pinCode = pinEntry.Text;
-
-            // Проверяем, есть ли в словаре значение пина
-            if (App.Current.Properties.TryGetValue("UserPIN", out object savedPin))
+            // Проверяем, есть ли в словаре ключ для значения пина
+            if (App.Current.Properties.ContainsKey("UserPIN"))
             {
+                isRegistration = true;
+                LabelPrompt.Text = "Entry PIN code:";
+            }
+            else
+            {
+                LabelPrompt.Text = "Set PIN code for registration:";                
+            }
+
+            base.OnAppearing();
+        }
+
+        private void ButtonSubmit_Clicked(object sender, EventArgs e)
+        {
+            CheckPin();
+        }
+
+        private void PinEntry_Completed(object sender, EventArgs e)
+        {
+            if (PinEntry.Text.Length >= 4)
+            {
+                CheckPin();
+            }
+        }
+
+        private async void CheckPin()
+        {
+            string pinCode = PinEntry.Text;
+
+            if (isRegistration == true)
+            {
+                //Если пин уже установлен проверяем его валидность
+                App.Current.Properties.TryGetValue("UserPIN", out object savedPin);
                 if (pinCode != (string)savedPin)
                 {
-                    pinEntry.Text = string.Empty;
+                    PinEntry.Text = string.Empty;
+                    InfoMsg.Text = string.Empty;
                     await DisplayAlert("Error", "An incorrect PIN has been entered", "Ok");
                 }
-                else 
-                { 
+                else
+                {
+                    //На период отладки убиваем пин после успешного входа
+                    //App.Current.Properties.Remove("UserPIN"); 
+                    //await App.Current.SavePropertiesAsync();
                     GetStarted();
                 }
             }
@@ -60,7 +99,8 @@ namespace Gallery_Module40.Pages
 
                 if (pinCode != pinConf)
                 {
-                    pinEntry.Text = string.Empty;
+                    PinEntry.Text = string.Empty;
+                    InfoMsg.Text = string.Empty;
                     await DisplayAlert("Error", "The PIN codes do not match", "Ok");
                 }
                 else
@@ -75,8 +115,22 @@ namespace Gallery_Module40.Pages
 
         private async void GetStarted()
         {
-            buttonSubmit.IsEnabled = false;
+            ButtonSubmit.IsEnabled = false;
             await Navigation.PushAsync(new GalleryViewer());
+        }
+
+        private void Password_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (PinEntry.Text.Length < 4)
+            {
+                InfoMsg.Text = "The PIN code must be between 4 and 8 characters long";
+                ButtonSubmit.IsEnabled = false; //Если ввели нормальный пин, а потом сохратили до 3 или менее символов
+            }
+            else
+            {
+                InfoMsg.Text = string.Empty;
+                ButtonSubmit.IsEnabled = true;
+            }
         }
     }
 }

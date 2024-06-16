@@ -13,7 +13,7 @@ namespace Gallery_Module40.Pages
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ImageViewer : ContentPage
 	{
-		public ImageViewer(Picture picture)
+		public ImageViewer(PictureModel picture)
         {
 			InitializeComponent();
 			
