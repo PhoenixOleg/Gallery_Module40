@@ -13,6 +13,7 @@ namespace Gallery_Module40.Models
         private string imageFileName;
         private string imageDate;
         private long id;
+        private string imageOwner;
 
         public PictureModel() { }
 
@@ -80,6 +81,21 @@ namespace Gallery_Module40.Models
             }
         }
 
+        public string ImageOwner
+        {
+            get
+            {
+                return imageOwner;
+            }
+
+            set
+            {
+                imageOwner = value;
+
+                // Вызов уведомления при изменении
+                OnPropertyChanged();
+            }
+        }
         /// <summary>
         /// Делегат, указывающий на метод-обработчик события PropertyChanged, возникающего при изменении свойств компонента
         /// </summary>

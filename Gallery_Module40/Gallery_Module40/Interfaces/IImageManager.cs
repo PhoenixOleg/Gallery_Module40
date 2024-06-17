@@ -9,7 +9,10 @@ namespace Gallery_Module40.Interfaces
 {
     public interface IImageManager
     {
-        ObservableCollection<PictureModel> GetImages(); 
-        void DeleteFile(PictureModel picture);
+        //ObservableCollection<PictureModel> GetImages();
+        List<PictureModel> GetImages();
+        bool DeleteFile(PictureModel picture, ref string message);
+        List<PictureModel> GetImageByName(string pictureName);
+        string GetImagePath();
     }
 }

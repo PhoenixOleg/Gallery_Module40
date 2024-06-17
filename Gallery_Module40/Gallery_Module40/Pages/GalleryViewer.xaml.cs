@@ -12,6 +12,7 @@ using Gallery_Module40.Interfaces;
 using Xamarin.Essentials;
 using Android.Media;
 using Android.Provider;
+using Android.App;
 
 namespace Gallery_Module40.Pages
 {
@@ -28,9 +29,24 @@ namespace Gallery_Module40.Pages
             BindingContext = this;
         }
 
+        protected async override void OnAppearing()
+        {
+            if (Device.RuntimePlatform != Device.Android)
+            {
+                await DisplayAlert("Warning", "This application has been tested only for the Android platform", "ОК");
+                System.Diagnostics.Process.GetCurrentProcess().Kill();
+            }
+
+            base.OnAppearing();
+        }
+
         private void GetImages()
         {
-            Pictures = DependencyService.Get<IImageManager>().GetImages();
+            Pictures.Clear();
+            foreach (var picture in DependencyService.Get<IImageManager>().GetImages())
+            {
+                Pictures.Add(picture);
+            }
         }
 
         private async void ButtonOpen_Clicked(object sender, EventArgs e)
@@ -51,42 +67,70 @@ namespace Gallery_Module40.Pages
                 return;
             }
 
-            //var answer = await DisplayAlert("Confirmation", $"Do you really want to remove the image '{picForRemove.ImageFileName}'", "Yes", "No");
-            //if (answer == false)
-            //{
-            //    return;
-            //}
+            var answer = await DisplayAlert("Confirmation", $"Do you really want to remove the image '{picForRemove.ImageFileName}'", "Yes", "No");
+            if (answer == false)
+            {
+                return;
+            }
 
-            Pictures.Remove(picForRemove);
-            DependencyService.Get<IImageManager>().DeleteFile(picForRemove);
+            string message = string.Empty;
 
-            //try
-            //{              
+            bool result = DependencyService.Get<IImageManager>().DeleteFile(picForRemove, ref message);
 
-            //    }
+            if (result == false)
+            {
+                await DisplayAlert("Error", message, "ОК");
+            }
+            else
+            {
+                Pictures.Remove(picForRemove);
+                PictureList.SelectedItem = null;
+                await DisplayAlert(null, message, "ОК");
+            }
 
-            //    // Уведомляем пользователя
-            //    await DisplayAlert(null, $"The image '{picForRemove.ImageFileName}' has been deleted", "ОК");
-            //    }
-            //    else
-            //    {
-            //        await DisplayAlert("Warning", "The image was not found. It may have already been deleted", "ОК");
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    await DisplayAlert("Error", ex.Message, "ОК");
-            //}
-
-            PictureList.SelectedItem = null;
         }
 
         private void ButtonRefresh_Clicked(object sender, EventArgs e)
         {
-            //Наданный момент не работает - зависимость походу отвязывается
-            //Pictures.Clear();
             GetImages();
             PictureList.SelectedItem = null;
+        }
+
+        private async void ButtonGetFoto_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                string title = App.Current.ToString() + "_" + DateTime.Now.ToString("yyyy.MM.dd_hh.mm.ss");
+                string newFileName = title + ".jpeg";
+                var photo = await MediaPicker.CapturePhotoAsync(new MediaPickerOptions
+                {
+                    Title = newFileName
+                });
+
+                string dcimFolder = DependencyService.Get<IImageManager>().GetImagePath();
+
+                string newFilePath = Path.Combine(dcimFolder, newFileName);
+                using (var stream = await photo.OpenReadAsync())
+                using (var newStream = File.OpenWrite(newFilePath))
+                {
+                    await stream.CopyToAsync(newStream);
+                }
+
+                List<PictureModel> newPictures = DependencyService.Get<IImageManager>().GetImageByName(title);
+
+                if (newPictures != null && newPictures.Count > 0)
+                {
+                    foreach (var picture in newPictures)
+                    {
+                        Pictures.Add(picture);
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", ex.Message, "OK");
+            }
         }
     }
 }

@@ -32,9 +32,9 @@ namespace Gallery_Module40.Droid
 
             #region Perm
 
-            if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.ReadExternalStorage) != Permission.Granted)
+            if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.ManageMedia) != Permission.Granted)
             {
-                ActivityCompat.RequestPermissions(this, new[] { Manifest.Permission.ReadExternalStorage }, RequestStoragePermissionCode);
+                ActivityCompat.RequestPermissions(this, new[] { Manifest.Permission.ManageMedia }, RequestStoragePermissionCode);
             }
 
             if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.WriteExternalStorage) != Permission.Granted)

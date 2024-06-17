@@ -1,9 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.companyname.gallery_module40" android:installLocation="preferExternal">
-	<uses-sdk android:minSdkVersion="29" android:targetSdkVersion="33" />
+	<uses-sdk android:minSdkVersion="28" android:targetSdkVersion="33" />
 	<application android:label="Gallery_Module40.Android" android:theme="@style/MainTheme"></application>
 	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 	<uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+	<uses-permission android:name="android.permission.MANAGE_MEDIA" />
+	<uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
+	<uses-permission android:name="android.permission.MEDIA_CONTENT_CONTROL" />
+	<uses-permission android:name="android.permission.CAMERA" />
+	<queries>
+       	    <intent>
+                <action android:name="android.media.action.IMAGE_CAPTURE" />
+            </intent>
+	</queries>
 </manifest>
